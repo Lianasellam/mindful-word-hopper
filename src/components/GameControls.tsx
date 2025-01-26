@@ -4,11 +4,10 @@ import { Input } from "@/components/ui/input";
 
 interface GameControlsProps {
   onWordSubmit: (word: string) => void;
-  timeLeft: number;
   score: number;
 }
 
-const GameControls: React.FC<GameControlsProps> = ({ onWordSubmit, timeLeft, score }) => {
+const GameControls: React.FC<GameControlsProps> = ({ onWordSubmit, score }) => {
   const [currentWord, setCurrentWord] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -23,9 +22,6 @@ const GameControls: React.FC<GameControlsProps> = ({ onWordSubmit, timeLeft, sco
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <div className="text-xl font-semibold">Score: {score}</div>
-        <div className="text-xl font-semibold text-indigo-600">
-          Time: {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}
-        </div>
       </div>
       
       <form onSubmit={handleSubmit} className="flex gap-2">

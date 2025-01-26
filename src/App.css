@@ -40,3 +40,29 @@
 .read-the-docs {
   color: #888;
 }
+
+.letter-cube {
+  aspect-ratio: 1;
+  background: white;
+  border-radius: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #4f46e5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  touch-action: manipulation;
+  user-select: none;
+  transition: transform 0.1s ease;
+}
+
+.letter-cube:active {
+  transform: scale(0.95);
+}
+
+@media (max-width: 640px) {
+  .letter-cube {
+    font-size: 1.25rem;
+  }
+}
