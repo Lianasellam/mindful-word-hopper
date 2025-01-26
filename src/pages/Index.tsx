@@ -5,6 +5,7 @@ import GameGrid from '../components/GameGrid';
 import GameControls from '../components/GameControls';
 import FoundWords from '../components/FoundWords';
 import { generateRandomGrid } from '../utils/gameUtils';
+import { isValidWord } from '../utils/wordValidation';
 
 const Index = () => {
   const [grid, setGrid] = useState(generateRandomGrid());
@@ -32,8 +33,16 @@ const Index = () => {
       return;
     }
 
+    if (!isValidWord(word)) {
+      toast({
+        title: "Invalid word",
+        description: "Word not found in dictionary",
+        variant: "destructive",
+      });
+      return;
+    }
+
     // In a real implementation, we'd validate if the word can be formed from the grid
-    // and check against a dictionary. For now, we'll accept all words.
     setFoundWords(prev => [...prev, word]);
     setScore(prev => prev + word.length);
     
