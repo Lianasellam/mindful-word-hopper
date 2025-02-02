@@ -42,7 +42,6 @@ const Index = () => {
       return;
     }
 
-    // In a real implementation, we'd validate if the word can be formed from the grid
     setFoundWords(prev => [...prev, word]);
     setScore(prev => prev + word.length);
     
@@ -84,6 +83,7 @@ const Index = () => {
         grid={grid} 
         editMode={editMode}
         onLetterChange={handleLetterChange}
+        onWordSubmit={handleWordSubmit}
       />
       
       <div className="mt-6">

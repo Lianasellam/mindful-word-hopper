@@ -31,12 +31,15 @@
   body {
     font-family: 'Inter', sans-serif;
     @apply bg-gradient-to-b from-slate-50 to-indigo-50 min-h-screen;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
   }
 }
 
 .letter-cube {
-  @apply w-16 h-16 bg-white rounded-lg shadow-md flex items-center justify-center text-2xl font-bold cursor-pointer
-    transition-all duration-200 hover:bg-indigo-100 hover:shadow-lg active:scale-95;
+  @apply w-16 h-16 bg-white rounded-lg shadow-md flex items-center justify-center text-2xl font-bold
+    transition-all duration-100 hover:bg-indigo-100 hover:shadow-lg active:scale-95 touch-none;
 }
 
 .found-word {
