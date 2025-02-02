@@ -36,7 +36,7 @@ const Index = () => {
     if (!isValidWord(word)) {
       toast({
         title: "Invalid word",
-        description: "Word not found in dictionary",
+        description: "Word not found in dictionary. Try another word!",
         variant: "destructive",
       });
       return;
