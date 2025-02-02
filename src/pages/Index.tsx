@@ -15,10 +15,10 @@ const Index = () => {
   const { toast } = useToast();
 
   const handleWordSubmit = (word: string) => {
-    if (word.length < 3) {
+    if (word.length < 1) {
       toast({
         title: "Word too short",
-        description: "Words must be at least 3 letters long",
+        description: "Words must be at least 2 letters long",
         variant: "destructive",
       });
       return;
