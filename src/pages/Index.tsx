@@ -68,7 +68,7 @@ const Index = () => {
 
   return (
     <div className="container max-w-2xl mx-auto py-8 px-4">
-      <h1 className="text-4xl font-bold text-center mb-8 text-indigo-600">Word Game</h1>
+      <h1 className="text-4xl font-bold text-center mb-8 text-indigo-600">Peter's Ruzzle</h1>
       
       <div className="flex justify-center gap-4 mb-4">
         <Button onClick={toggleEditMode} variant={editMode ? "secondary" : "outline"}>
