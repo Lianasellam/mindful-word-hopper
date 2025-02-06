@@ -31,6 +31,17 @@ const GameGrid: React.FC<GameGridProps> = ({ grid, editMode, onLetterChange, onW
     return selectedCells.map(([row, col]) => grid[row][col]).join('');
   };
 
+  const getCellFromTouch = (touch: Touch): [number, number] | null => {
+    const element = document.elementFromPoint(touch.clientX, touch.clientY);
+    const cellElement = element?.closest('.letter-cube');
+    if (cellElement) {
+      const row = parseInt(cellElement.getAttribute('data-row') || '0');
+      const col = parseInt(cellElement.getAttribute('data-col') || '0');
+      return [row, col];
+    }
+    return null;
+  };
+
   const handleCellInteraction = (row: number, col: number, isStart: boolean) => {
     if (editMode) return;
     
@@ -42,6 +53,19 @@ const GameGrid: React.FC<GameGridProps> = ({ grid, editMode, onLetterChange, onW
       if (isAdjacent(lastCell, [row, col]) && !selectedCells.some(cell => cell[0] === row && cell[1] === col)) {
         setSelectedCells([...selectedCells, [row, col]]);
       }
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    e.preventDefault();
+    if (!isSelecting) return;
+
+    const touch = e.touches[0];
+    const cellCoords = getCellFromTouch(touch);
+    
+    if (cellCoords) {
+      const [row, col] = cellCoords;
+      handleCellInteraction(row, col, false);
     }
   };
 
@@ -57,10 +81,10 @@ const GameGrid: React.FC<GameGridProps> = ({ grid, editMode, onLetterChange, onW
   useEffect(() => {
     const handleMouseUp = () => handleSelectionEnd();
     document.addEventListener('mouseup', handleMouseUp);
-    document.addEventListener('touchend', handleMouseUp);
+    document.addEventListener('touchend', handleSelectionEnd);
     return () => {
       document.removeEventListener('mouseup', handleMouseUp);
-      document.removeEventListener('touchend', handleMouseUp);
+      document.removeEventListener('touchend', handleSelectionEnd);
     };
   }, [isSelecting, selectedCells]);
 
@@ -70,6 +94,7 @@ const GameGrid: React.FC<GameGridProps> = ({ grid, editMode, onLetterChange, onW
       className="grid grid-cols-4 gap-2 p-4 bg-white/50 rounded-xl shadow-lg"
       onMouseLeave={handleSelectionEnd}
       onTouchEnd={handleSelectionEnd}
+      onTouchMove={handleTouchMove}
     >
       {grid.map((row, i) =>
         row.map((letter, j) => {
@@ -85,17 +110,6 @@ const GameGrid: React.FC<GameGridProps> = ({ grid, editMode, onLetterChange, onW
                 e.preventDefault();
                 handleCellInteraction(i, j, true);
               }}
-              onTouchMove={(e) => {
-                e.preventDefault();
-                const touch = e.touches[0];
-                const element = document.elementFromPoint(touch.clientX, touch.clientY);
-                const cellElement = element?.closest('.letter-cube');
-                if (cellElement) {
-                  const row = parseInt(cellElement.getAttribute('data-row') || '0');
-                  const col = parseInt(cellElement.getAttribute('data-col') || '0');
-                  handleCellInteraction(row, col, false);
-                }
-              }}
               data-row={i}
               data-col={j}
             >
@@ -108,7 +122,7 @@ const GameGrid: React.FC<GameGridProps> = ({ grid, editMode, onLetterChange, onW
                   maxLength={1}
                 />
               ) : (
-                <div className="w-full h-full flex items-center justify-center">
+                <div className="w-full h-full flex items-center justify-center text-xl font-bold">
                   {letter}
                 </div>
               )}
