@@ -56,7 +56,7 @@ const GameGrid: React.FC<GameGridProps> = ({ grid, editMode, onLetterChange, onW
     }
   };
 
-  const handleTouchMove = (e: React.TouchEvent) => {
+  const handleTouchMove = (e: React.TouchEvent): void => {
     e.preventDefault();
     if (!isSelecting) return;
 
