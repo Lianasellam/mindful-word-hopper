@@ -61,11 +61,12 @@ const GameGrid: React.FC<GameGridProps> = ({ grid, editMode, onLetterChange, onW
     if (!isSelecting) return;
 
     const touch = e.touches[0];
-    const cellCoords = getCellFromTouch(touch);
-    
-    if (cellCoords) {
-      const [row, col] = cellCoords;
-      handleCellInteraction(row, col, false);
+    if (touch) {
+      const cellCoords = getCellFromTouch(touch as Touch);
+      if (cellCoords) {
+        const [row, col] = cellCoords;
+        handleCellInteraction(row, col, false);
+      }
     }
   };
 
